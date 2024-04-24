@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using StudentTeacher;
 
 class Program
@@ -17,7 +18,7 @@ class Program
 
         var serviceProvider = services.BuildServiceProvider();
 
-        var interaction = serviceProvider.GetRequiredService<ITeacherStudentInteraction>();
+        var eventPublisher = serviceProvider.GetRequiredService<IMediator>();
 
         bool teacherInClass = true;
         var resp = "";
@@ -32,11 +33,11 @@ class Program
             {
                 if(teacherInClass)
                 {
-                    interaction.TeacherJoinsStudentsInClass();
+                    eventPublisher.Publish(new TeacherJoinsClass());
                 }
                 else
                 {
-                    interaction.TeacherLeavesClassroom();
+                    eventPublisher.Publish(new TeacherLeavesClass());
                 }
                 teacherInClass = !teacherInClass;
             }
