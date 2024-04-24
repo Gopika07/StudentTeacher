@@ -4,7 +4,7 @@
     {
         Teacher teacher = new Teacher();
          StudentRepository studentRepo = new StudentRepository();
-        StudentService student = new StudentService(studentRepo);
+        StudentService students = new StudentService(studentRepo);
 
         bool teacherInClass = true;
         var resp = "";
@@ -20,12 +20,12 @@
                 if(teacherInClass)
                 {
                     teacher.GetIntoClass();
-                    student.GoSilentAll();
+                    students.GoSilentAll();
                 }
                 else
                 {
                     teacher.GetOutOfClass();
-                    student.MakeNoiseAll();
+                    students.MakeNoiseAll();
                 }
                 teacherInClass = !teacherInClass;
             }
