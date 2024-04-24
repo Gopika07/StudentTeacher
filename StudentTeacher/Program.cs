@@ -8,6 +8,10 @@ class Program
         services.AddSingleton(new Teacher());
         services.AddSingleton(new StudentRepository());
         services.AddSingleton<StudentService>();
+        services.AddMediatR(c =>
+        {
+            c.RegisterServicesFromAssembly(typeof(Program).Assembly);
+        });
 
         var serviceProvider = services.BuildServiceProvider();
 
