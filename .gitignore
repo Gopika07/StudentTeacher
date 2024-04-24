@@ -5,5 +5,9 @@
 *.vscode/
 *.vs/
 
+# JetBrains Rider files
+.idea/
+
 # Ignore bin and obj directories
 bin/
+obj/

@@ -1,12 +1,37 @@
-﻿class Program
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using StudentTeacher;
+
+class Program
 {
     static void Main(string[] args)
     {
-        Teacher teacher = new Teacher();
-         StudentRepository studentRepo = new StudentRepository();
-        StudentService students = new StudentService(studentRepo);
+        var serviceProvider = SetUpDependencyInjection();
 
-        bool teacherInClass = true;
+        var state = serviceProvider.GetRequiredService<ToggleState>();
+        
+        RunLoop(state);
+    }
+
+    private static ServiceProvider SetUpDependencyInjection()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton(new Teacher());
+        services.AddSingleton(new StudentRepository());
+        services.AddSingleton<StudentService>();
+        services.AddMediatR(c =>
+        {
+            c.RegisterServicesFromAssembly(typeof(Program).Assembly);
+        });
+        services.AddTransient<ITeacherStudentInteraction, TeacherStudentInteraction>();
+        services.AddSingleton<ToggleState>();
+
+        var serviceProvider = services.BuildServiceProvider();
+        return serviceProvider;
+    }
+
+    private static void RunLoop(ToggleState state)
+    {
         var resp = "";
 
         do
@@ -15,19 +40,9 @@
             Console.WriteLine("Enter E to exit");
             resp = Console.ReadLine();
 
-            if(resp == "T" || resp == "t")
+            if(resp is "T" or "t")
             {
-                if(teacherInClass)
-                {
-                    teacher.GetIntoClass();
-                    students.GoSilentAll();
-                }
-                else
-                {
-                    teacher.GetOutOfClass();
-                    students.MakeNoiseAll();
-                }
-                teacherInClass = !teacherInClass;
+                state.Toggle();
             }
             else
             {
