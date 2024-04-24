@@ -6,6 +6,15 @@ class Program
 {
     static void Main(string[] args)
     {
+        var serviceProvider = SetUpDependencyInjection();
+
+        var state = serviceProvider.GetRequiredService<ToggleState>();
+        
+        RunLoop(state);
+    }
+
+    private static ServiceProvider SetUpDependencyInjection()
+    {
         var services = new ServiceCollection();
         services.AddSingleton(new Teacher());
         services.AddSingleton(new StudentRepository());
@@ -18,10 +27,7 @@ class Program
         services.AddSingleton<ToggleState>();
 
         var serviceProvider = services.BuildServiceProvider();
-
-        var state = serviceProvider.GetRequiredService<ToggleState>();
-        
-        RunLoop(state);
+        return serviceProvider;
     }
 
     private static void RunLoop(ToggleState state)
