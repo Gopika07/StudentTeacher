@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using StudentTeacher;
 
 class Program
 {
@@ -12,11 +13,11 @@ class Program
         {
             c.RegisterServicesFromAssembly(typeof(Program).Assembly);
         });
+        services.AddTransient<ITeacherStudentInteraction, TeacherStudentInteraction>();
 
         var serviceProvider = services.BuildServiceProvider();
 
-        Teacher teacher = serviceProvider.GetRequiredService<Teacher>();
-        StudentService students = serviceProvider.GetRequiredService<StudentService>();
+        var interaction = serviceProvider.GetRequiredService<ITeacherStudentInteraction>();
 
         bool teacherInClass = true;
         var resp = "";
@@ -31,13 +32,11 @@ class Program
             {
                 if(teacherInClass)
                 {
-                    teacher.GetIntoClass();
-                    students.GoSilentAll();
+                    interaction.TeacherJoinsStudentsInClass();
                 }
                 else
                 {
-                    teacher.GetOutOfClass();
-                    students.MakeNoiseAll();
+                    interaction.TeacherLeavesClassroom();
                 }
                 teacherInClass = !teacherInClass;
             }
