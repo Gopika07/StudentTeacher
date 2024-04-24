@@ -1,0 +1,9 @@
+# Ignore Visual Studio files
+*.sln
+*.suo
+*.user
+*.vscode/
+*.vs/
+
+# Ignore bin and obj directories
+bin/
