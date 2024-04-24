@@ -21,6 +21,11 @@ class Program
 
         var state = serviceProvider.GetRequiredService<ToggleState>();
         
+        RunLoop(state);
+    }
+
+    private static void RunLoop(ToggleState state)
+    {
         var resp = "";
 
         do
