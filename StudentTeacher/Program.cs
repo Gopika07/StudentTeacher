@@ -3,7 +3,8 @@
     static void Main(string[] args)
     {
         Teacher teacher = new Teacher();
-        StudentAction student = new StudentAction();
+         StudentRepository studentRepo = new StudentRepository();
+        StudentService student = new StudentService(studentRepo);
 
         bool teacherInClass = true;
         var resp = "";
@@ -19,15 +20,19 @@
                 if(teacherInClass)
                 {
                     teacher.GetIntoClass();
-                    student.GoSilent();
+                    student.GoSilentAll();
                 }
                 else
                 {
                     teacher.GetOutOfClass();
-                    student.MakeNoise();
+                    student.MakeNoiseAll();
                 }
                 teacherInClass = !teacherInClass;
             }
-        }while(resp != "E");
+            else
+            {
+                Console.WriteLine("Enter a valid input");
+            }
+        }while(resp.ToUpper() != "E");
     }
 }

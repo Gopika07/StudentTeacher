@@ -12,3 +12,4 @@ C:\Users\gopikaep\source\Assessment\StudentTeacher\StudentTeacher\obj\Debug\net8
 C:\Users\gopikaep\source\Assessment\StudentTeacher\StudentTeacher\obj\Debug\net8.0\StudentTeacher.pdb
 C:\Users\gopikaep\source\Assessment\StudentTeacher\StudentTeacher\obj\Debug\net8.0\StudentTeacher.genruntimeconfig.cache
 C:\Users\gopikaep\source\Assessment\StudentTeacher\StudentTeacher\obj\Debug\net8.0\ref\StudentTeacher.dll
+C:\Users\gopikaep\source\Assessment\StudentTeacher\StudentTeacher\obj\Debug\net8.0\StudentTeacher.sourcelink.json
