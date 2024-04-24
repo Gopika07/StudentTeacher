@@ -15,12 +15,12 @@ class Program
             c.RegisterServicesFromAssembly(typeof(Program).Assembly);
         });
         services.AddTransient<ITeacherStudentInteraction, TeacherStudentInteraction>();
+        services.AddSingleton<ToggleState>();
 
         var serviceProvider = services.BuildServiceProvider();
 
-        var eventPublisher = serviceProvider.GetRequiredService<IMediator>();
-
-        bool teacherInClass = true;
+        var state = serviceProvider.GetRequiredService<ToggleState>();
+        
         var resp = "";
 
         do
@@ -29,17 +29,9 @@ class Program
             Console.WriteLine("Enter E to exit");
             resp = Console.ReadLine();
 
-            if(resp == "T" || resp == "t")
+            if(resp is "T" or "t")
             {
-                if(teacherInClass)
-                {
-                    eventPublisher.Publish(new TeacherJoinsClass());
-                }
-                else
-                {
-                    eventPublisher.Publish(new TeacherLeavesClass());
-                }
-                teacherInClass = !teacherInClass;
+                state.Toggle();
             }
             else
             {
