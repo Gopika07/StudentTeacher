@@ -1,10 +1,18 @@
-﻿class Program
+﻿using Microsoft.Extensions.DependencyInjection;
+
+class Program
 {
     static void Main(string[] args)
     {
-        Teacher teacher = new Teacher();
-         StudentRepository studentRepo = new StudentRepository();
-        StudentService students = new StudentService(studentRepo);
+        var services = new ServiceCollection();
+        services.AddSingleton(new Teacher());
+        services.AddSingleton(new StudentRepository());
+        services.AddSingleton<StudentService>();
+
+        var serviceProvider = services.BuildServiceProvider();
+
+        Teacher teacher = serviceProvider.GetRequiredService<Teacher>();
+        StudentService students = serviceProvider.GetRequiredService<StudentService>();
 
         bool teacherInClass = true;
         var resp = "";
